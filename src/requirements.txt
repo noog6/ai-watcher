@@ -1,0 +1,13 @@
+flask
+smbus
+unittest2
+mock
+adafruit-circuitpython-ssd1306
+PyAudio
+pyPS4Controller
+PyYAML
+Pillow
+numpy
+simple_pid
+simpleaudio
+openai

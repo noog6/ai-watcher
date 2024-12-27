@@ -2,6 +2,7 @@ import os
 import socket
 import time
 from flask                           import Flask, jsonify, request, render_template, render_template_string, send_from_directory
+from event_handler                   import AudioEventHandler, CameraEventHandler, ServoEventHandler
 from controllers.sensor_service      import SensorService
 from hardware.ServoRegistry          import ServoRegistry
 from hardware.AudioController        import AudioController
@@ -11,6 +12,17 @@ from controllers.imu_controller      import IMUController
 from controllers.config_controller   import ConfigController
 
 #################################
+# Event Handlers Initialization #
+#################################
+
+audio_event_handler = AudioEventHandler()
+camera_event_handler = CameraEventHandler()
+servo_event_handler = ServoEventHandler()
+
+# Start event processing threads
+threading.Thread(target=audio_event_handler.process_events, daemon=True).start()
+threading.Thread(target=camera_event_handler.process_events, daemon=True).start()
+threading.Thread(target=servo_event_handler.process_events, daemon=True).start()
 # Some ASCII Art thanks to https://www.asciiart.eu/text-to-ascii-art
 #################################
 

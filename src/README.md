@@ -39,7 +39,7 @@ sudo raspi-config
 ```
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install python3-pip python3-smbus git libasound-dev portaudio19-dev python-all-dev libsndfile1 joystick ffmpeg python3-picamera2
+sudo apt-get install python3-pip python3-smbus git libasound2-dev portaudio19-dev python3-all-dev libsndfile1 joystick ffmpeg python3-picamera2
 ```
 Now we can setup the Audo Hat (Mic+ v2 RaspiAudio.com): (from https://forum.raspiaudio.com/t/mic-installation-guide/17)
 ```

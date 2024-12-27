@@ -2,6 +2,7 @@ import os
 import socket
 import time
 from flask                           import Flask, jsonify, request, render_template, render_template_string, send_from_directory
+import threading
 from event_handler                   import AudioEventHandler, CameraEventHandler, ServoEventHandler
 from controllers.sensor_service      import SensorService
 from hardware.ServoRegistry          import ServoRegistry
@@ -102,7 +103,7 @@ def play_audio():
     filename = request.json.get('filename')
     #audio_controller = AudioController.get_instance()
     #audio_controller.play(filename)
-    storage_controller.add_log('warn', f'Someone asked us to play this audio file - {filename}')
+    storage_service.add_log('warn', f'Someone asked us to play this audio file - {filename}')
     return 'Audio played successfully', 200
 
 @app.route('/audio/record', methods=['POST'])
@@ -111,7 +112,7 @@ def record_audio():
     filename = request.json.get('filename')
     #audio_controller = AudioController.get_instance()
     #audio_controller.record(duration, filename)
-    storage_controller.add_log('warn', f'Someone asked us to record to this audio file - {filename}')
+    storage_service.add_log('warn', f'Someone asked us to record to this audio file - {filename}')
     return 'Audio recorded successfully', 200
 
 #################################

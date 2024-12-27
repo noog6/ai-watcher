@@ -3,7 +3,7 @@ import socket
 import time
 from flask                           import Flask, jsonify, request, render_template, render_template_string, send_from_directory
 import threading
-from event_handler                   import AudioEventHandler, CameraEventHandler, ServoEventHandler
+from event_handlers                  import AudioEventHandler, CameraEventHandler, ServoEventHandler
 from controllers.sensor_service      import SensorService
 from hardware.ServoRegistry          import ServoRegistry
 from hardware.AudioController        import AudioController
@@ -20,7 +20,11 @@ audio_event_handler = AudioEventHandler()
 camera_event_handler = CameraEventHandler()
 servo_event_handler = ServoEventHandler()
 
-# Start event processing threads
+# Initialize and start event processing threads
+audio_event_handler = AudioEventHandler()
+camera_event_handler = CameraEventHandler()
+servo_event_handler = ServoEventHandler()
+
 threading.Thread(target=audio_event_handler.process_events, daemon=True).start()
 threading.Thread(target=camera_event_handler.process_events, daemon=True).start()
 threading.Thread(target=servo_event_handler.process_events, daemon=True).start()
@@ -140,9 +144,11 @@ def handle_exception(e):
     # return a JSON response with the error details
     return jsonify({'error': str(e)}), 500
 
-#################################
-# Main Application ##############
-#################################
+def main_loop():
+    while True:
+        # Listen for events and delegate to appropriate handlers
+        # This is a placeholder for the main event loop logic
+        time.sleep(1)  # Simulate idle state
 
 if __name__ == '__main__':
     storage_service.add_log('info', f'AI-Watcher started on host ({hostname})')
@@ -154,6 +160,10 @@ if __name__ == '__main__':
     print("IMU Data:")
     imu_service.print_imu()
     print("")
+    
+    # Start the main loop
+    main_thread = threading.Thread(target=main_loop, daemon=True)
+    main_thread.start()
         
     app.run(host='0.0.0.0', debug=False)
 
